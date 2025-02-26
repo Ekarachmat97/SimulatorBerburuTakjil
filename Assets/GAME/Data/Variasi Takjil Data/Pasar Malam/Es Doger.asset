@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f377d95daf2a642bfcbd9571243d14, type: 3}
+  m_Name: Es Doger
+  m_EditorClassIdentifier: 
+  takjilName: Es Doger
+  takjilIcon: {fileID: 21300000, guid: 9b3856bfb4ee1ec4b8e7ce7c349b6b4f, type: 3}
+  price: 7000
+  isCollected: 0
+  collectionStatus: 0
+  bazarType: 2

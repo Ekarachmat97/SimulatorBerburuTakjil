@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f377d95daf2a642bfcbd9571243d14, type: 3}
+  m_Name: Es Cendol
+  m_EditorClassIdentifier: 
+  takjilName: Es Cendol
+  takjilIcon: {fileID: 21300000, guid: 9e6033f6d8c210346b2f7ca46991463b, type: 3}
+  price: 10000
+  isCollected: 0
+  collectionStatus: 0
+  bazarType: 1
