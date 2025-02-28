@@ -70,28 +70,26 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
- 
     public void ClearInventoryForQuest(List<TakjilData> questItems)
     {
         foreach (var takjil in questItems)
         {
             if (inventory.ContainsKey(takjil))
             {
-                inventory.Remove(takjil); 
+                inventory.Remove(takjil);
                 Debug.Log($"{takjil.takjilName} dihapus dari inventory karena quest selesai.");
             }
         }
 
-      
         OnInventoryChangedEvent?.Invoke();
     }
 
     public Dictionary<TakjilData, int> GetInventory()
     {
-        return new Dictionary<TakjilData, int>(inventory); 
+        return new Dictionary<TakjilData, int>(inventory);
     }
 
-        // =======================
+    // =======================
     // SISTEM KARTU DISKON
     // =======================
 
@@ -100,7 +98,11 @@ public class InventoryManager : MonoBehaviour
         if (!kartuDiskonInventory.Contains(card))
         {
             kartuDiskonInventory.Add(card);
+            card.isCollected = true;
+            card.collectionStatus = CardDiskonData.CollectionStatus.Collected;
             Debug.Log($"Kartu diskon '{card.namaKartu}' ({card.persentaseDiskon}%) ditambahkan ke inventory.");
+
+            OnInventoryChangedEvent?.Invoke(); // Update UI setelah kartu ditambahkan
         }
         else
         {
@@ -118,6 +120,7 @@ public class InventoryManager : MonoBehaviour
         if (kartuDiskonInventory.Contains(card))
         {
             kartuDiskonInventory.Remove(card);
+            card.isCollected = false;
             card.collectionStatus = CardDiskonData.CollectionStatus.NotCollected;
             Debug.Log($"Kartu {card.namaKartu} dihapus dari inventory!");
             OnInventoryChangedEvent?.Invoke();
@@ -130,6 +133,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public List<CardDiskonData> GetCardDiskonInventory()
+    {
+        return kartuDiskonInventory.FindAll(card => card.isCollected);
+    }
 
     public void PrintInventory()
     {
@@ -144,5 +151,4 @@ public class InventoryManager : MonoBehaviour
             Debug.Log($"- {card.namaKartu} ({card.persentaseDiskon}% diskon)");
         }
     }
-
 }

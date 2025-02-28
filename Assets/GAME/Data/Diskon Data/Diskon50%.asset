@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Diskon50%
   m_EditorClassIdentifier: 
   namaKartu: Diskon 50%
+  deskripsiKartu: Kartu diskon bisa digunakan di semua toko
   persentaseDiskon: 50
-  durasiEfek: 0
+  imageIcon: {fileID: 21300000, guid: a9776a7105433428fbaffa0dbd91343d, type: 3}
   isCollected: 0
   collectionStatus: 0
-  description: diskon Super 50%
-  icon: {fileID: 21300000, guid: b8eceded76aa34c38baaa18c3f16a5ae, type: 3}

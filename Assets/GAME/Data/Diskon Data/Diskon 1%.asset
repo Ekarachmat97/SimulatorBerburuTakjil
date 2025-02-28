@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Diskon 1%
   m_EditorClassIdentifier: 
   namaKartu: Diskon 1%
+  deskripsiKartu: Kartu diskon bisa digunakan di semua toko
   persentaseDiskon: 1
-  durasiEfek: 0
+  imageIcon: {fileID: 21300000, guid: 1c5285cd08e864fc5b0aaa3d5c086703, type: 3}
   isCollected: 0
   collectionStatus: 0
-  description: Diskon pasar 1%
-  icon: {fileID: 21300000, guid: b8eceded76aa34c38baaa18c3f16a5ae, type: 3}

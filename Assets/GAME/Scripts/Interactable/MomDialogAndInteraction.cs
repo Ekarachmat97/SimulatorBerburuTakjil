@@ -5,7 +5,7 @@ using TMPro;
 
 public class MomDialogAndInteraction : MonoBehaviour, IInteractable
 {
-    [Header("UI References")]
+    [Header("UI Components")]
     public GameObject dialogPanel;
     public TextMeshProUGUI dialogText;
     public Button nextButton;
@@ -18,7 +18,7 @@ public class MomDialogAndInteraction : MonoBehaviour, IInteractable
     public string completedDialogMessage = "Wah terima kasih yah, kembaliannya buat kamu!";
     public string waktunyaBerbukaDialogMessage = "Nak sudah waktunya berbuka, ayo pulang";
 
-    [Header("Component")]
+   
     private int dialogStage = 0;
     private TakjilQuestManager questManager;
     private RewardUI rewardUI;

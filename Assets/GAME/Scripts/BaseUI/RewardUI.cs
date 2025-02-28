@@ -4,6 +4,7 @@ using TMPro;
 
 public class RewardUI : MonoBehaviour
 {
+    [Header("UI Components")]
     public GameObject rewardUIPanel;
     public TextMeshProUGUI rewardText;
     public TextMeshProUGUI evaluationText;

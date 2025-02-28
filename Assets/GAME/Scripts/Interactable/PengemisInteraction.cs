@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class PengemisInteraction : MonoBehaviour, IInteractable
 {
-    [Header("UI References")]
+    [Header("UI Components")]
     public GameObject dialogPanel;
     public TextMeshProUGUI dialogText;
     public Button giveMoneyButton;
@@ -15,6 +15,8 @@ public class PengemisInteraction : MonoBehaviour, IInteractable
     [Header("Pengemis Settings")]
     public int moneyAmount = 500;
     public int pahalaReward = 50;
+
+    [Header("UI Dialog")]
     public string[] dialogMessage = new string[] 
     {
         "Aaaa kasian aaa...",

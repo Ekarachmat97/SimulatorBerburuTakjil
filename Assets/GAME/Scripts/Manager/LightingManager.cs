@@ -4,6 +4,7 @@ public class LightingManager : MonoBehaviour
 {
     public static LightingManager Instance;
 
+    [Header("UI Components")]
     public Light directionLight;
     public GameObject pointLight;
 

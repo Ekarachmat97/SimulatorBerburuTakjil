@@ -4,6 +4,7 @@ public class LapakUnlockManager : MonoBehaviour
 {
     public static LapakUnlockManager Instance;
 
+    [Header("UI Components")]
     public GameObject pasarModern;
     public GameObject pasarMalam;
 

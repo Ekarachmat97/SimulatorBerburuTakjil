@@ -19,7 +19,6 @@ public class UpgradeManager : MonoBehaviour
     public Button openUpgradePanel;
     public Button closeUpgradePanel;
 
-    private int upgradeLevel = 1;
     private int currentPrice;
     private string selectedSkill = "";
 
@@ -29,6 +28,12 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private int basePriceMenawar = 20000;
     [SerializeField] private int basePriceBonusCoin = 12000;
 
+    private int maxUpgradeLevel = 10;
+    private int levelMovement = 1;
+    private int levelTime = 1;
+    private int levelMenawar = 1;
+    private int levelBonusCoin = 1;
+
     void Awake()
     {
         playerManager = FindObjectOfType<PlayerManager>();
@@ -36,13 +41,11 @@ public class UpgradeManager : MonoBehaviour
 
     void Start()
     {
-        // Tambahkan event listener untuk tombol skill
         skillMovement.onClick.AddListener(() => ShowUpgradeInfo("MovementSpeed"));
         skillTime.onClick.AddListener(() => ShowUpgradeInfo("Time"));
         skillMenawar.onClick.AddListener(() => ShowUpgradeInfo("Menawar"));
         skillBonusCoins.onClick.AddListener(() => ShowUpgradeInfo("BonusCoin"));
 
-       
         upgradeButton.onClick.AddListener(UpgradeSkill);
         closeUpgradePanel.onClick.AddListener(() => ClosePanelUpgrade());
         openUpgradePanel.onClick.AddListener(() => OpenUpgradePanel());
@@ -56,23 +59,34 @@ public class UpgradeManager : MonoBehaviour
 
     private void UpdateStatsText()
     {
+        int currentLevel = GetSkillLevel(selectedSkill);
+        if (currentLevel >= maxUpgradeLevel)
+        {
+            statsText.text = "Skill ini sudah mencapai level maksimal!";
+            priceText.text = "";
+            upgradeButton.interactable = false;
+            return;
+        }
+        
+        upgradeButton.interactable = true;
+
         switch (selectedSkill)
         {
             case "MovementSpeed":
-                currentPrice = basePriceMovement * upgradeLevel;
-                statsText.text = $"Movement Speed: {playerManager.movementSpeed:F1} → {playerManager.movementSpeed + 0.2f:F1}";
+                currentPrice = basePriceMovement * currentLevel;
+                statsText.text = $"Movement Speed: {playerManager.movementSpeed:F1} → {playerManager.movementSpeed + 0.2f:F1}\nLevel {currentLevel}/10";
                 break;
             case "Time":
-                currentPrice = basePriceTime * upgradeLevel;
-                statsText.text = $"Waktu: {playerManager.timeModifier:F2} → {playerManager.timeModifier - 0.01f:F2}";
+                currentPrice = basePriceTime * currentLevel;
+                statsText.text = $"Waktu: {playerManager.timeModifier:F2} → {playerManager.timeModifier - 0.01f:F2}\nLevel {currentLevel}/10";
                 break;
             case "Menawar":
-                currentPrice = basePriceMenawar * upgradeLevel;
-                statsText.text = $"Diskon Menawar: {playerManager.discountBonus * 100}% → {(playerManager.discountBonus + 0.05f) * 100}%";
+                currentPrice = basePriceMenawar * currentLevel;
+                statsText.text = $"Diskon Menawar: {playerManager.discountBonus * 100}% → {(playerManager.discountBonus + 0.05f) * 100}%\nLevel {currentLevel}/10";
                 break;
             case "BonusCoin":
-                currentPrice = basePriceBonusCoin * upgradeLevel;
-                statsText.text = $"Bonus Coin: {playerManager.bonusCoin} → {playerManager.bonusCoin + 500}";
+                currentPrice = basePriceBonusCoin * currentLevel;
+                statsText.text = $"Bonus Coin: {playerManager.bonusCoin} → {playerManager.bonusCoin + 500}\nLevel {currentLevel}/10";
                 break;
         }
 
@@ -84,7 +98,13 @@ public class UpgradeManager : MonoBehaviour
         if (selectedSkill == "")
         {
             AudioManager.instance.Play("close");
-            
+            return;
+        }
+
+        int currentLevel = GetSkillLevel(selectedSkill);
+        if (currentLevel >= maxUpgradeLevel)
+        {
+            Debug.Log("Skill sudah mencapai level maksimal!");
             return;
         }
 
@@ -96,48 +116,46 @@ public class UpgradeManager : MonoBehaviour
             {
                 case "MovementSpeed":
                     playerManager.movementSpeed += 0.2f;
-                    if (FindObjectOfType<PlayerMovement>() != null)
-                    {
-                        FindObjectOfType<PlayerMovement>().moveSpeed = playerManager.movementSpeed;
-                    }
+                    levelMovement++;
                     break;
 
                 case "Time":
-                    playerManager.timeModifier += 0.02f; 
-                    if (FindObjectOfType<TimeManager>() != null)
-                    {
-                        FindObjectOfType<TimeManager>().UpdateTimeSpeed();
-                    }
+                    playerManager.timeModifier -= 0.01f;
+                    levelTime++;
                     break;
 
                 case "Menawar":
-                    playerManager.discountBonus += 5f; // Tambah 5% diskon tiap upgrade
-                    if (FindObjectOfType<GenericStore>() != null)
-                    {
-                        FindObjectOfType<GenericStore>().UpdatePlayerDiscountBonus();
-                    }
+                    playerManager.discountBonus += 0.05f;
+                    levelMenawar++;
                     break;
 
                 case "BonusCoin":
-                    playerManager.bonusCoin += 500; // Tambah 500 koin tiap upgrade
-                    if (FindObjectOfType<RewardUI>() != null)
-                    {
-                        FindObjectOfType<RewardUI>().UpdatePlayerBonusCoins();
-                    }
+                    playerManager.bonusCoin += 500;
+                    levelBonusCoin++;
                     break;
             }
 
             Debug.Log($"Upgrade {selectedSkill} berhasil! Harga: {currentPrice}");
 
-            upgradeLevel++;
             UpdateStatsText();
         }
         else
         {
             AudioManager.instance.Play("close");
-
             Debug.Log("Uang tidak cukup untuk upgrade!");
         }
+    }
+
+    private int GetSkillLevel(string skill)
+    {
+        return skill switch
+        {
+            "MovementSpeed" => levelMovement,
+            "Time" => levelTime,
+            "Menawar" => levelMenawar,
+            "BonusCoin" => levelBonusCoin,
+            _ => 1
+        };
     }
 
     private void OpenUpgradePanel()
@@ -151,9 +169,8 @@ public class UpgradeManager : MonoBehaviour
     {
         Time.timeScale = 1;
         AudioManager.instance.Play("close");
-
-        statsText.text="";
-         priceText.text = $"";
+        statsText.text = "";
+        priceText.text = "";
         upgradePanel.SetActive(false);
     }
 }

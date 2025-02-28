@@ -6,12 +6,14 @@ public class SideQuestUI : MonoBehaviour
 {
     public static SideQuestUI Instance;
 
+    [Header("UI Components")]
     public Button closeButton;
     public TextMeshProUGUI questTitleText;
     public TextMeshProUGUI questProgressText;
     public TextMeshProUGUI questTimerText;
     public TextMeshProUGUI dialogText;
     public GameObject npcSideQuestDialogPanel;
+    [Header("UI Dialogs")]
     public string[] dialogMessage = new string[] 
     {
         "Aku kehilangan barangku, bantu aku carikan yah",

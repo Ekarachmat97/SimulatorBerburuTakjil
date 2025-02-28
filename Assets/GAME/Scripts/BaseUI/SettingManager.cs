@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SettingManager : MonoBehaviour
 {
+    [Header("UI Components")]
     public GameObject panelSetting; 
     public Slider volumeSlider;
     public Button exitButton; 
